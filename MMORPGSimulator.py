@@ -8,14 +8,6 @@ from PIL import Image, ImageTk
 import random
 import time
 
-def charStats():
-    strStat = 1
-    dexStat = 1
-    conStat = 1
-    intStat = 1
-    wisStat = 1
-    chrStat = 1
-
 # gui class
 
 class mmorpgGUI:
@@ -70,13 +62,13 @@ class mmorpgGUI:
         self.imageLabel.image = render
         self.imageLabel.grid(column=1,row=1, columnspan = 4, rowspan = 5)
 
-        
 
         # stat blocks
 
         self.strength = Label(master, text="Strength: "+str(strStat))        
         self.strength.grid(column=0,row=1, sticky='W')
         self.strength.config(font=("Freeserif", 20))
+        self.strength.after(4000, self.refresh_str)
 
         self.dexterity = Label(master, text="Dexterity: "+str(dexStat))        
         self.dexterity.grid(column=0,row=2, sticky='W')
@@ -102,22 +94,30 @@ class mmorpgGUI:
         self.close_button = Button(master, text="Close", command=master.quit)
         self.close_button.grid(column=1,row=9, sticky ='NESW')
         
-        #self.processDir = Button(master, text="Make Character", command= self.doWork)
-        #self.processDir.grid(column=0, row=6)
+        # the timer test
+        # will use this structure to update XP and level up stats
 
-        # counter = 1
-
-        # def poll(self):
-        
-        #     self.strength2 = Label(master, text="Strength: "+str(strStat))        
-        #     self.strength2.grid(column=1,row=10, sticky='W')
-        #     self.strength2.config(font=("Freeserif", 20))
-        #     counter += 1
-
-        # self.master.after(1000, self.poll)
-
-        # poll(self)
+        self.var = strStat
+        self.seconds = 0
+        self.timeLabel = Label(master, text="Test Timer: 0 s")
+        self.timeLabel.grid(column=1,row=10, sticky='W')
+        self.timeLabel.config(font=("Freeserif", 20))
+        self.timeLabel.after(1000, self.timerTest_label)
     
+    # basic timer test
+
+    def timerTest_label(self):
+        self.seconds += 1
+        self.timeLabel.configure(text="Test Timer: %i s" % self.seconds)
+        self.timeLabel.after(1000, self.timerTest_label)
+
+        # update strength test
+
+    def refresh_str(self):
+        self.var += 1
+        self.strength.configure(text="Strength: %i" % self.var)
+        self.strength.after(4000, self.refresh_str)
+
 
 # display gui and loop it    
 if __name__ == "__main__":        
