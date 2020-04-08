@@ -41,7 +41,7 @@ class mmorpgGUI:
         
         # specify geometry, must make coords a string normally looks like "490x190+220+200"
         
-        master.geometry("980x500+"+str(xLocation)+"+"+str(yLocation))        
+        master.geometry("720x500+"+str(xLocation)+"+"+str(yLocation))        
 		        
         # using grid rather than pack to set buttons in correct spot
 
@@ -105,18 +105,18 @@ class mmorpgGUI:
         #self.processDir = Button(master, text="Make Character", command= self.doWork)
         #self.processDir.grid(column=0, row=6)
 
-        counter = 1
+        # counter = 1
 
-        def poll(self):
+        # def poll(self):
         
-            self.strength2 = Label(master, text="Strength: "+str(strStat))        
-            self.strength2.grid(column=1,row=10, sticky='W')
-            self.strength2.config(font=("Freeserif", 20))
-            counter += 1
+        #     self.strength2 = Label(master, text="Strength: "+str(strStat))        
+        #     self.strength2.grid(column=1,row=10, sticky='W')
+        #     self.strength2.config(font=("Freeserif", 20))
+        #     counter += 1
 
-        self.master.after(1000, self.poll)
+        # self.master.after(1000, self.poll)
 
-        poll(self)
+        # poll(self)
     
 
 # display gui and loop it    
