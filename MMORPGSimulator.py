@@ -99,10 +99,19 @@ class mmorpgGUI:
 
         self.var = strStat
         self.seconds = 0
+
+        self.battle = 3
+
         self.timeLabel = Label(master, text="Test Timer: 0 s")
         self.timeLabel.grid(column=1,row=10, sticky='W')
         self.timeLabel.config(font=("Freeserif", 20))
         self.timeLabel.after(1000, self.timerTest_label)
+
+
+        self.battleLabel = Label(master, text="No Battles Yet This Round")
+        self.battleLabel.grid(column=1,row=11, sticky='W')
+        self.battleLabel.config(font=("Freeserif", 14))
+        self.battleLabel.after(4000, self.timerBattleLable)        
     
     # basic timer test
 
@@ -111,12 +120,48 @@ class mmorpgGUI:
         self.timeLabel.configure(text="Test Timer: %i s" % self.seconds)
         self.timeLabel.after(1000, self.timerTest_label)
 
+        # array loading
+
+        self.weaponsArray = []
+        self.enemyArray = []
+
+
+        # randomly generate weapons and enemies
+
+        with open('weaponNames') as input_file:
+            for i, line in enumerate(input_file):
+                #remove \n char
+                n = len(line) - 1
+                #build array of weapons
+                self.weaponsArray.append(line[:n])
+
+        with open('enemyNames') as input_file:
+            for i, line in enumerate(input_file):
+                #remove \n char
+                n = len(line) - 1
+                #build array of weapons
+                self.enemyArray.append(line[:n])
+
+        self.x = len(self.weaponsArray)
+        self.weapon = random.randint(0,self.x)
+
+        self.z = len(self.enemyArray)
+        self.enemy = random.randint(0,self.z)
+
         # update strength test
 
     def refresh_str(self):
         self.var += 1
         self.strength.configure(text="Strength: %i" % self.var)
         self.strength.after(4000, self.refresh_str)
+
+
+        # battle test
+
+    def timerBattleLable(self):
+        self.battle += 1
+        self.battleLabel.configure(text=self.enemyArray[self.enemy]+" attacks with it's "+self.weaponsArray[self.weapon])
+        self.battleLabel.after(4000, self.timerBattleLable)
 
 
 # display gui and loop it    
